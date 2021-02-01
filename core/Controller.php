@@ -12,13 +12,21 @@ use League\Plates\Engine;
 class Controller
 {
 
-    public function Render($view, $params = [])
-    {
 
+    /**
+     * @param array $packages -> When passing this parameter please call the static function from
+     * AssetManage.php Class. Pass that function all the packages you defined
+     * in the same class packages array
+     */
+
+    public function Render($view, $title, $params = [], $packages = [])
+    {
         $templates = new Engine(Application::$ROOT_DIR . '/views');
+        $params['VIEW_NAME'] = $view;
+        $params['PAGE_TITLE'] = $title;
+        $params['PACKAGES'] = $packages;
 
         return $templates->render($view, $params);
-
     }
 
 }
