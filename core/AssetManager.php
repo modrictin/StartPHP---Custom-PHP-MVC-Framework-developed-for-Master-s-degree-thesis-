@@ -23,7 +23,7 @@ class AssetManager
     static array $TemplatePackages = [
         'tester' => [
             'css' => ['tester/css/test.css', 'tester/css/test2.css'],
-            'js' => ['tester/js/test.js', 'tester/js/test2.js']
+            'js' => ['tester/js/test1.js', 'tester/js/test2.js']
         ],
     ];
 
@@ -63,7 +63,7 @@ class AssetManager
     }
 
 
-    public static function GetViewStyles(string $view)
+    public static function GetViewScripts(string $view)
     {
         $js_includes = '';
         if (@file_exists('./assets/view_assets/' . $view . '/js/')) {
@@ -81,15 +81,15 @@ class AssetManager
     }
 
 
-    public static function GetViewScripts(string $view)
+    public static function GetViewStyles(string $view)
     {
         $css_includes = '';
-        if (@file_exists('./assets/view_assets/' . $view . '/js/')) {
-            $included_files = scandir('./assets/view_assets/' . $view . '/js/');
+        if (@file_exists('./assets/view_assets/' . $view . '/css/')) {
+            $included_files = scandir('./assets/view_assets/' . $view . '/css/');
             if (!empty($included_files)) {
                 foreach ($included_files as $file_name) {
-                    if (preg_match('!\.js!', $file_name)) {
-                        $Path = './assets/view_assets/' . $view . '/js/' . $file_name;
+                    if (preg_match('!\.css!', $file_name)) {
+                        $Path = './assets/view_assets/' . $view . '/css/' . $file_name;
                         $css_includes .= " <link rel=\"stylesheet\" href=\"$Path\"/>\n";
                     }
                 }
@@ -121,7 +121,7 @@ class AssetManager
         $StylesHtml = '';
 
         foreach ($Packages['css'] as $path) {
-            $StylesHtml .= " <link rel=\"stylesheet\" href=\"./packages/$path\"/>\n";
+            $StylesHtml .= " <link rel=\"stylesheet\" href=\"./assets/packages/$path\"/>\n";
         }
         echo $StylesHtml;
     }
@@ -130,7 +130,7 @@ class AssetManager
     {
         $ScriptsHtml = '';
         foreach ($Packages['js'] as $path) {
-            $ScriptsHtml .= '<script type="text/javascript" src="./packages/' . $path . '"></script>';
+            $ScriptsHtml .= '<script type="text/javascript" src="./assets/packages/' . $path . '"></script>';
         }
         echo $ScriptsHtml;
     }

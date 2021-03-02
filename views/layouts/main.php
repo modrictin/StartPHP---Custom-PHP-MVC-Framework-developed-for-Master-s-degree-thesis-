@@ -17,7 +17,7 @@ use app\core\AssetManager;
           rel="stylesheet">
     <?php AssetManager::GetTemplateStyles(); ?>
     <?php AssetManager::GetViewStyles($this->e($VIEW_NAME)); ?>
-    <?php #AssetManager::GetPackageStyles($PACKAGES); ?>
+    <?php AssetManager::GetPackageStyles($PACKAGES); ?>
 </head>
 <body>
 <div class="wrapper ">
@@ -141,8 +141,7 @@ use app\core\AssetManager;
 </body>
 <?php AssetManager::GetTemplateScripts() ?>
 <?php AssetManager::GetViewScripts($VIEW_NAME); ?>
-<?php var_dump($PACKAGES);
-AssetManager::GetPackageScripts($PACKAGES); ?>
+<?php AssetManager::GetPackageScripts($PACKAGES); ?>
 
 <!-- SET ACTIVE STATUS IF LINK MATCHES THE MODULE -->
 <script>
