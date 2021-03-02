@@ -11,7 +11,13 @@ use League\Plates\Engine;
 
 class Controller
 {
+    public Request $Request;
 
+
+    public function __construct()
+    {
+        $this->Request = Application::$app->Request;
+    }
 
     /**
      * @param array $packages -> When passing this parameter please call the static function from

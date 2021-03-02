@@ -7,25 +7,30 @@
 
 namespace app\controllers;
 
-use app\core\Application;
+
 use app\core\AssetManager;
 use app\core\Controller;
-use League\Plates\Engine;
+
 
 class SiteController extends Controller
 {
 
-    public function __construct()
+
+    public function Home()
     {
-
-
+        return $this->Render('home', "Dashboard", ['name' => array("asd")], AssetManager::IncludePackages(['tester']));
     }
 
-    public function home()
+    public function Contact()
+    {
+        return $this->Render("contact", "Contact Support");
+    }
+
+    public function HandleContact()
     {
 
 
-        return $this->Render('home', "VBEAA", ['name' => array("asd")], AssetManager::IncludePackages(['tester']));
+        var_dump($this->Request->GetBody());
 
     }
 }

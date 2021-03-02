@@ -22,8 +22,8 @@ class AssetManager
 
     static array $TemplatePackages = [
         'tester' => [
-            'css' => ['test.css', 'test2.css'],
-            'js' => ['test.js', 'test2.js']
+            'css' => ['tester/css/test.css', 'tester/css/test2.css'],
+            'js' => ['tester/js/test.js', 'tester/js/test2.js']
         ],
     ];
 
@@ -84,12 +84,12 @@ class AssetManager
     public static function GetViewScripts(string $view)
     {
         $css_includes = '';
-        if (@file_exists('./assets/view_assets/' . $view . '/css/')) {
-            $included_files = scandir('./assets/view_assets/' . $view . '/css/');
+        if (@file_exists('./assets/view_assets/' . $view . '/js/')) {
+            $included_files = scandir('./assets/view_assets/' . $view . '/js/');
             if (!empty($included_files)) {
                 foreach ($included_files as $file_name) {
-                    if (preg_match('!\.css!', $file_name)) {
-                        $Path = './assets/view_assets/' . $view . '/css/' . $file_name;
+                    if (preg_match('!\.js!', $file_name)) {
+                        $Path = './assets/view_assets/' . $view . '/js/' . $file_name;
                         $css_includes .= " <link rel=\"stylesheet\" href=\"$Path\"/>\n";
                     }
                 }
@@ -120,8 +120,8 @@ class AssetManager
     {
         $StylesHtml = '';
 
-        foreach ($Packages['js'] as $path) {
-            $StylesHtml .= " <link rel=\"stylesheet\" href=\"$path\"/>\n";
+        foreach ($Packages['css'] as $path) {
+            $StylesHtml .= " <link rel=\"stylesheet\" href=\"./packages/$path\"/>\n";
         }
         echo $StylesHtml;
     }
@@ -129,8 +129,8 @@ class AssetManager
     public static function GetPackageScripts(array $Packages)
     {
         $ScriptsHtml = '';
-        foreach ($Packages['css'] as $path) {
-            $StylesHtml .= '<script src="' . $path . '"></script>\n';
+        foreach ($Packages['js'] as $path) {
+            $ScriptsHtml .= '<script type="text/javascript" src="./packages/' . $path . '"></script>';
         }
         echo $ScriptsHtml;
     }
