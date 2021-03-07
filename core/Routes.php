@@ -17,6 +17,8 @@ class Routes
 {
     static function DefineRouts(RouteCollector $router)
     {
+        //TODO:: 404
+
         $router->get('/', [SiteController::class, "Home"]);
         $router->get('/contact', [SiteController::class, "Contact"]);
         $router->post('/contact', [SiteController::class, "HandleContact"]);
