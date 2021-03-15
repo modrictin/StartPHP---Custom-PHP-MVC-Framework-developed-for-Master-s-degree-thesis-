@@ -45,9 +45,32 @@ abstract class Model
                 switch ($ruleName) {
                     case self::RULE_REQUIRED:
                         if (!v::notEmpty()->validate($value)) {
-                            $this->addError($attribute, self::RULE_REQUIRED);
+                            $this->addError($attribute, $ruleName);
                         }
                         break;
+                    case self::RULE_EMAIL:
+                        if (!v::notEmpty()->email()->validate($value)) {
+                            $this->addError($attribute, $ruleName);
+                        }
+                        break;
+                    case self::RULE_MIN:
+                        if (!v::stringType()->length($rule['min'])->validate($value)) {
+                            $this->addError($attribute, $ruleName, $rule);
+                        }
+                        break;
+                    case self::RULE_MAX:
+                        if (!v::stringType()->length(null, $rule['max'])->validate($value)) {
+                            $this->addError($attribute, $ruleName, $rule);
+                        }
+                        break;
+                    case self::RULE_MATCH:
+                        if (!v::stringType()->equals($this->{$rule['match']})->validate($value)) {
+                            $this->addError($attribute, $ruleName, $rule);
+
+                        }
+                        break;
+
+
                 }
             }
         }
@@ -57,9 +80,12 @@ abstract class Model
 
     abstract public function rules(): array;
 
-    public function addError(string $attribute, string $rule)
+    public function addError(string $attribute, string $rule, $params = [])
     {
         $message = $this->errorMessages()[$rule] ?? '';
+        foreach ($params as $key => $value) {
+            $message = str_replace("{{$key}}", $value, $message);
+        }
         $this->errors[$attribute][] = $message;
     }
 
@@ -74,5 +100,15 @@ abstract class Model
         ];
     }
 
+
+    public function hasError($attribute)
+    {
+        return $this->errors[$attribute] ?? false;
+    }
+
+    public function getFirstError($attribute)
+    {
+        return $this->errors[$attribute][0] ?? false;
+    }
 
 }

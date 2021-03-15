@@ -18,7 +18,7 @@ class Application
 {
     public static string $ROOT_DIR;
     public static Application $app;
-
+    public Database $db;
     public RouteCollector $router;
     public Dispatcher $dispatcher;
     public Request $Request;
@@ -39,7 +39,7 @@ class Application
     {
         self::$ROOT_DIR = $RootPath;
         self::$app = $this;
-
+        $this->db = new Database();
         $this->Response = new Response();
         $this->Request = new Request();
         //Initialize RouteCollector and Dispatcher
