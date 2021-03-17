@@ -13,6 +13,7 @@ use Phroute\Phroute\Exception\BadRouteException;
 use Phroute\Phroute\Exception\HttpMethodNotAllowedException;
 use Phroute\Phroute\Exception\HttpRouteNotFoundException;
 use Phroute\Phroute\RouteCollector;
+use Dotenv\Dotenv;
 
 class Application
 {
@@ -23,6 +24,9 @@ class Application
     public Dispatcher $dispatcher;
     public Request $Request;
     public Response $Response;
+    public Session $session;
+
+    public array $config;
 
 
     private $RouterResponse;
@@ -37,13 +41,28 @@ class Application
 
     public function __construct(string $RootPath)
     {
+        $this->initConfig();
         self::$ROOT_DIR = $RootPath;
         self::$app = $this;
-        $this->db = new Database();
+        $this->db = new Database($this->config['db']);
         $this->Response = new Response();
+        $this->session = new Session();
         $this->Request = new Request();
         //Initialize RouteCollector and Dispatcher
         $this->InitializeRouter();
+    }
+
+    private function initConfig()
+    {
+        $dotenv = Dotenv::createImmutable(dirname(__DIR__));
+        $dotenv->load();
+        $this->config = [
+            'db' => [
+                'dsn' => $_ENV['DB_DSN'],
+                'user' => $_ENV['DB_USER'],
+                'password' => $_ENV['DB_PASSWORD']
+            ]
+        ];
     }
 
     private function InitializeRouter()
@@ -78,11 +97,8 @@ class Application
      */
     public function Run()
     {
-
         // Echo The Response from Routes
-
         echo $this->RouterResponse;
-
     }
 
 

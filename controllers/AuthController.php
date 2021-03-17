@@ -7,9 +7,10 @@
 
 namespace app\controllers;
 
+use app\core\Application;
 use app\core\AssetManager;
 use app\core\Controller;
-use app\models\RegisterModel;
+use app\models\User;
 
 class AuthController extends Controller
 {
@@ -22,25 +23,26 @@ class AuthController extends Controller
 
     public function Register()
     {
-        $registerModel = new RegisterModel();
+        $user = new User();
 
         if ($this->Request->isPost()) {
-            $registerModel->loadData($this->Request->getBody());
+            $user->loadData($this->Request->getBody());
 
 
-            if ($registerModel->validate() && $registerModel->register()) {
+            if ($user->validate() && $user->save()) {
 
-                return 'success';
+                Application::$app->session->setFlash('success', 'Thanks for registering');
+                Application::$app->Response->redirect('/');
             }
 
             return $this->Render("Register", "Registration Page", [
-                'model' => $registerModel
+                'model' => $user
             ]);
 
 
         }
         return $this->Render("Register", "Registration Page", [
-            'model' => $registerModel
+            'model' => $user
         ]);
     }
 

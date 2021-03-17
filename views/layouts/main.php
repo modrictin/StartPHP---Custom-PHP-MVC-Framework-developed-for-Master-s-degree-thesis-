@@ -127,6 +127,15 @@ use app\core\AssetManager;
         </nav>
         <div class="content">
             <div class="container-fluid">
+                <?php if (Application::$app->session->getFlash('success')) { ?>
+
+                    <div class="alert alert-success">
+                        <?php echo Application::$app->session->getFlash('success') ?>
+                    </div>
+
+                <?php } ?>
+
+
                 <?= $this->section('content') ?>
 
             </div>

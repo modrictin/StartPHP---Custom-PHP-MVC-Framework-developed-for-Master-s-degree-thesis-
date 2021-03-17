@@ -20,10 +20,10 @@ $this->layout('layouts/auth', [
                 <?php $form = Form::begin('', 'post'); ?>
                 <div class="row">
                     <div class="col">
-                        <?php echo $form->field($model, 'fname'); ?>
+                        <?php echo $form->field($model, 'firstname'); ?>
                     </div>
                     <div class="col">
-                        <?php echo $form->field($model, 'lname'); ?>
+                        <?php echo $form->field($model, 'lastname'); ?>
                     </div>
                 </div>
                 <?php echo $form->field($model, 'email'); ?>

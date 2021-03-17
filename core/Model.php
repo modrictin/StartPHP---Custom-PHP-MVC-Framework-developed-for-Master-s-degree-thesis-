@@ -18,6 +18,7 @@ abstract class Model
     public const RULE_MIN = 'min';
     public const RULE_MAX = 'max';
     public const RULE_MATCH = 'match';
+    public const RULE_UNIQUE = 'unique';
 
     public array $errors = [];
 
@@ -69,8 +70,18 @@ abstract class Model
 
                         }
                         break;
-
-
+                    case self::RULE_UNIQUE:
+                        $className = $rule['class'];
+                        $uniqueAttribute = $rule['attribute'] ?? $attribute;
+                        $tableName = $className::tableName();
+                        $stmt = Application::$app->db->prepare("SELECT * FROM $tableName WHERE $uniqueAttribute = :attr");
+                        $stmt->bindValue(":attr", $value);
+                        $stmt->execute();
+                        $record = $stmt->fetchObject();
+                        if ($record) {
+                            $this->addError($attribute, $ruleName, ['field' => $uniqueAttribute]);
+                        }
+                        break;
                 }
             }
         }
@@ -84,9 +95,19 @@ abstract class Model
     {
         $message = $this->errorMessages()[$rule] ?? '';
         foreach ($params as $key => $value) {
-            $message = str_replace("{{$key}}", $value, $message);
+            if (key_exists($value, $this->labels())) {
+                $replacement = $this->getLabel($value);
+            } else {
+                $replacement = $value;
+            }
+            $message = str_replace("{{$key}}", $replacement, $message);
         }
         $this->errors[$attribute][] = $message;
+    }
+
+    public function getLabel($attr): string
+    {
+        return $this->labels()[$attr];
     }
 
     public function errorMessages()
@@ -97,6 +118,7 @@ abstract class Model
             self::RULE_MIN => 'Min length of this field must be {min}',
             self::RULE_MAX => 'Max length of this field must be {max}',
             self::RULE_MATCH => 'This field must be the same as {match}',
+            self::RULE_UNIQUE => 'Record with this {field} already exists!',
         ];
     }
 
@@ -110,5 +132,7 @@ abstract class Model
     {
         return $this->errors[$attribute][0] ?? false;
     }
+
+    abstract public function labels(): array;
 
 }
