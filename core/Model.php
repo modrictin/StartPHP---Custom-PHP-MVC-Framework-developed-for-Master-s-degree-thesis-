@@ -31,7 +31,7 @@ abstract class Model
         }
     }
 
-    public function validate()
+    public function validate(): bool
     {
 
         foreach ($this->rules() as $attribute => $rules) {
@@ -46,27 +46,27 @@ abstract class Model
                 switch ($ruleName) {
                     case self::RULE_REQUIRED:
                         if (!v::notEmpty()->validate($value)) {
-                            $this->addError($attribute, $ruleName);
+                            $this->addRuleError($attribute, $ruleName);
                         }
                         break;
                     case self::RULE_EMAIL:
                         if (!v::notEmpty()->email()->validate($value)) {
-                            $this->addError($attribute, $ruleName);
+                            $this->addRuleError($attribute, $ruleName);
                         }
                         break;
                     case self::RULE_MIN:
                         if (!v::stringType()->length($rule['min'])->validate($value)) {
-                            $this->addError($attribute, $ruleName, $rule);
+                            $this->addRuleError($attribute, $ruleName, $rule);
                         }
                         break;
                     case self::RULE_MAX:
                         if (!v::stringType()->length(null, $rule['max'])->validate($value)) {
-                            $this->addError($attribute, $ruleName, $rule);
+                            $this->addRuleError($attribute, $ruleName, $rule);
                         }
                         break;
                     case self::RULE_MATCH:
                         if (!v::stringType()->equals($this->{$rule['match']})->validate($value)) {
-                            $this->addError($attribute, $ruleName, $rule);
+                            $this->addRuleError($attribute, $ruleName, $rule);
 
                         }
                         break;
@@ -79,7 +79,7 @@ abstract class Model
                         $stmt->execute();
                         $record = $stmt->fetchObject();
                         if ($record) {
-                            $this->addError($attribute, $ruleName, ['field' => $uniqueAttribute]);
+                            $this->addRuleError($attribute, $ruleName, ['field' => $uniqueAttribute]);
                         }
                         break;
                 }
@@ -91,7 +91,7 @@ abstract class Model
 
     abstract public function rules(): array;
 
-    public function addError(string $attribute, string $rule, $params = [])
+    private function addRuleError(string $attribute, string $rule, $params = [])
     {
         $message = $this->errorMessages()[$rule] ?? '';
         foreach ($params as $key => $value) {
@@ -105,12 +105,17 @@ abstract class Model
         $this->errors[$attribute][] = $message;
     }
 
+    public function addErrorMessage(string $attribute, string $message)
+    {
+        $this->errors[$attribute][] = $message;
+    }
+
     public function getLabel($attr): string
     {
         return $this->labels()[$attr];
     }
 
-    public function errorMessages()
+    public function errorMessages(): array
     {
         return [
             self::RULE_REQUIRED => 'This field is required',

@@ -27,8 +27,13 @@ class AssetManager
         ],
     ];
 
+    public static function baseUrl()
+    {
+        $htt = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https' : 'http';
+        return $htt . '://' . $_SERVER["SERVER_NAME"];
+    }
 
-    public static function GetTemplateScripts()
+    static function GetTemplateScripts()
     {
         $js_includes = '';
         if (@file_exists('./assets/template/js/')) {
@@ -36,7 +41,7 @@ class AssetManager
             if (!empty($included_files)) {
                 foreach ($included_files as $file_name) {
                     if (preg_match('!\.js!', $file_name)) {
-                        $Path = './assets/template/js/' . $file_name;
+                        $Path = self::baseUrl() . '/assets/template/js/' . $file_name;
                         $js_includes .= '<script src="' . $Path . '"></script>';
                     }
                 }
@@ -53,7 +58,7 @@ class AssetManager
             if (!empty($included_files)) {
                 foreach ($included_files as $file_name) {
                     if (preg_match('!\.css!', $file_name)) {
-                        $Path = './assets/template/css/' . $file_name;
+                        $Path = self::baseUrl() . '/assets/template/css/' . $file_name;
                         $css_includes .= " <link rel=\"stylesheet\" href=\"$Path\"/>\n";
                     }
                 }
@@ -63,7 +68,8 @@ class AssetManager
     }
 
 
-    public static function GetViewScripts(string $view)
+    public
+    static function GetViewScripts(string $view)
     {
         $js_includes = '';
         if (@file_exists('./assets/view_assets/' . $view . '/js/')) {
@@ -71,7 +77,7 @@ class AssetManager
             if (!empty($included_files)) {
                 foreach ($included_files as $file_name) {
                     if (preg_match('!\.js!', $file_name)) {
-                        $Path = './assets/view_assets/' . $view . '/js/' . $file_name;
+                        $Path = self::baseUrl() . '/assets/view_assets/' . $view . '/js/' . $file_name;
                         $js_includes .= '<script src="' . $Path . '"></script>';
                     }
                 }
@@ -81,15 +87,17 @@ class AssetManager
     }
 
 
-    public static function GetViewStyles(string $view)
+    public
+    static function GetViewStyles(string $view)
     {
+
         $css_includes = '';
         if (@file_exists('./assets/view_assets/' . $view . '/css/')) {
             $included_files = scandir('./assets/view_assets/' . $view . '/css/');
             if (!empty($included_files)) {
                 foreach ($included_files as $file_name) {
                     if (preg_match('!\.css!', $file_name)) {
-                        $Path = './assets/view_assets/' . $view . '/css/' . $file_name;
+                        $Path = self::baseUrl() . '/assets/view_assets/' . $view . '/css/' . $file_name;
                         $css_includes .= " <link rel=\"stylesheet\" href=\"$Path\"/>\n";
                     }
                 }
@@ -99,7 +107,8 @@ class AssetManager
 
     }
 
-    public static function IncludePackages(array $Packages)
+    public
+    static function IncludePackages(array $Packages)
     {
         $ReturnArray = [];
         foreach ($Packages as $package) {
@@ -116,7 +125,8 @@ class AssetManager
         return $ReturnArray;
     }
 
-    public static function GetPackageStyles(array $Packages)
+    public
+    static function GetPackageStyles(array $Packages)
     {
         $StylesHtml = '';
 
@@ -126,7 +136,8 @@ class AssetManager
         echo $StylesHtml;
     }
 
-    public static function GetPackageScripts(array $Packages)
+    public
+    static function GetPackageScripts(array $Packages)
     {
         $ScriptsHtml = '';
         foreach ($Packages['js'] as $path) {

@@ -1,6 +1,8 @@
 <?php
 
+use app\core\Application;
 use app\core\AssetManager;
+
 
 ?>
 <!DOCTYPE html>
@@ -21,7 +23,8 @@ use app\core\AssetManager;
 <body>
 <div class="wrapper ">
     <div class="container-fluid">
-        <?= $this->section('content') ?>
+
+    <?= $this->section('content') ?>
     </div>
 </div>
 

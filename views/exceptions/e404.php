@@ -1,0 +1,39 @@
+<?php
+
+/** @var $model app\models\User */
+
+use app\core\AssetManager;
+use app\core\form\Form;
+
+$this->layout('/layouts/auth', [
+    'title' => $this->e($PAGE_TITLE),
+    'VIEW_NAME' => $this->e($VIEW_NAME),
+    'PACKAGES' => $PACKAGES
+]);
+
+?>
+
+<div class="d-flex justify-content-center">
+    <div class="col-md-4 pt-5">
+        <div class="card">
+            <div class="card-header card-header-primary">
+                <h4 class="card-title">Route not found</h4>
+            </div>
+            <br>
+            <h4 class="text-center"><?php echo $message ?></h4>
+            <div class="row">
+                <div class="col-md-12 text-center">
+
+                    <a href="/">
+
+                        <button class="btn btn-success ">Home</button>
+                    </a>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</div>

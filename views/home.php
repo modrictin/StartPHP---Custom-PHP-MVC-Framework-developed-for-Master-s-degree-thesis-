@@ -1,15 +1,11 @@
 <?php
 
 
-$this->layout('layouts/main', [
-    'title' => $this->e($PAGE_TITLE),
-    'VIEW_NAME' => $this->e($VIEW_NAME),
-    'PACKAGES' => $PACKAGES
-]);
+$this->layout('layouts/main');
 
 
 ?>
 
-<h1>User Profile</h1>
-<p>Hello, <?= $this->e($VIEW_NAME) ?>
+<h1>asd</h1>
+<p>Hello, <?= $this->e($GlobalViewName); ?>
 <pre>

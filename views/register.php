@@ -1,12 +1,9 @@
 <?php
+/** @var $model app\models\User */
 
 use app\core\form\Form;
 
-$this->layout('layouts/auth', [
-    'title' => $this->e($PAGE_TITLE),
-    'VIEW_NAME' => $this->e($VIEW_NAME),
-    'PACKAGES' => $PACKAGES
-]);
+$this->layout('layouts/auth');
 
 ?>
 
@@ -30,6 +27,9 @@ $this->layout('layouts/auth', [
                 <?php echo $form->field($model, 'password')->passwordField(); ?>
                 <?php echo $form->field($model, 'confirmPassword')->passwordField(); ?>
                 <button type="submit" class="btn btn-primary float-right ">Register</button>
+                <a href="/login">
+                    <button type="button" class="btn btn-default float-left ">Back to login</button>
+                </a>
                 <?php Form::end(); ?>
 
             </div>

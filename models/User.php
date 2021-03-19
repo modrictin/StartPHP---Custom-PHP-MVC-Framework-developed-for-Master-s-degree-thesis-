@@ -10,8 +10,9 @@ namespace app\models;
 
 use app\core\DbModel;
 use app\core\Model;
+use app\core\UserModel;
 
-class User extends DbModel
+class User extends UserModel
 {
     public string $firstname = '';
     public string $lastname = '';
@@ -54,7 +55,7 @@ class User extends DbModel
     }
 
 
-    public function tableName(): string
+    public static function tableName(): string
     {
         return 'users';
     }
@@ -81,5 +82,16 @@ class User extends DbModel
             'status',
             'password'
         ];
+    }
+
+
+    public static function primaryKey(): string
+    {
+        return 'id';
+    }
+
+    public function getDisplayName(): string
+    {
+        return $this->firstname . ' ' . $this->lastname;
     }
 }

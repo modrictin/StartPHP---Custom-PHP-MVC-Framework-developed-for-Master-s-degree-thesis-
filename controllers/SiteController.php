@@ -8,29 +8,37 @@
 namespace app\controllers;
 
 
+use app\core\Application;
 use app\core\AssetManager;
 use app\core\Controller;
+use app\models\ContactForm;
 
 
 class SiteController extends Controller
 {
 
-
     public function Home()
     {
-        return $this->Render('home', "Dashboard", ['name' => array("asd")], AssetManager::IncludePackages(['tester']));
+        return $this->Render('home', "Dashboard", [], ['tester']);
     }
 
     public function Contact()
     {
-        return $this->Render("contact", "Contact Support");
+        $contact = new ContactForm();
+        return $this->Render("contact", "Contact Support", ['model' => $contact]);
+
     }
 
-    public function HandleContact()
+    public function handleContact()
     {
-
-
-        var_dump($this->Request->GetBody());
+        $contact = new ContactForm();
+        $contact->loadData($this->Request->GetBody());
+        if ($contact->validate() && $contact->send()) {
+            Application::$app->session->setFlash('success', 'Thanks for contacting support');
+            $this->Response->Redirect('/contact');
+        }
+        return $this->Render("contact", "Contact Support", ['model' => $contact]);
 
     }
+
 }

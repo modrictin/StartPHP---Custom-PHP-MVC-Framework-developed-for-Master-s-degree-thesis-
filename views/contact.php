@@ -1,10 +1,9 @@
 <?php
 
-$this->layout('layouts/main', [
-    'title' => $this->e($PAGE_TITLE),
-    'VIEW_NAME' => $this->e($VIEW_NAME),
-    'PACKAGES' => $PACKAGES
-]);
+use app\core\form\Form;
+
+$this->layout('layouts/main');
+/**  @var $model \app\models\ContactForm */
 
 ?>
 
@@ -12,44 +11,22 @@ $this->layout('layouts/main', [
     <div class="col-md-8">
         <div class="card">
             <div class="card-header card-header-primary">
-                <h4 class="card-title">Edit Profile</h4>
-                <p class="card-category">Complete your profile</p>
+                <h4 class="card-title">Contact Support</h4>
+                <p class="card-category">Fill out the form to contact support</p>
             </div>
             <div class="card-body">
-                <form method="post">
-                    <div class="row">
 
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label class="bmd-label-floating">Username</label>
-                                <input type="text" name="Username" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label class="bmd-label-floating">Email address</label>
-                                <input type="email" name="Email" class="form-control">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="bmd-label-floating">Fist Name</label>
-                                <input type="text" name="fname" class="form-control">
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="bmd-label-floating">Last Name</label>
-                                <input type="text" name="lname" class="form-control">
-                            </div>
-                        </div>
-                    </div>
+                <?php $form = Form::begin('', 'post') ?>
+                <?php echo $form->field($model, 'subject') ?>
+                <?php echo $form->field($model, 'email') ?>
+                <?php echo $form->field($model, 'body') ?>
 
-                    <button type="submit" class="btn btn-primary pull-right">Update Profile</button>
-                    <div class="clearfix"></div>
-                </form>
+
+                <button type="submit" class="btn btn-primary float-right">Update Profile</button>
+
+                <?php Form::end() ?>
+
+
             </div>
         </div>
     </div>

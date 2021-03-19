@@ -7,30 +7,31 @@
 
 namespace app\core;
 
+use app\core\middlewares\BaseMiddleware;
 use League\Plates\Engine;
 
 class Controller
 {
     public Request $Request;
+    public string $action = '';
+    public Response $Response;
 
 
     public function __construct()
     {
         $this->Request = Application::$app->Request;
+        $this->Response = Application::$app->Response;
+
     }
 
-    /**
-     * @param array $packages -> When passing this parameter please call the static function from
-     * AssetManage.php Class. Pass that function all the packages you defined
-     * in the same class packages array
-     */
 
     public function Render($view, $title, $params = [], $packages = [])
     {
         $templates = new Engine(Application::$ROOT_DIR . '/views');
-        $params['VIEW_NAME'] = $view;
-        $params['PAGE_TITLE'] = $title;
-        $params['PACKAGES'] = $packages;
+
+        $templates->addData(['GlobalViewName' => $view]);
+        $templates->addData(['GlobalPageTitle' => $title]);
+        $templates->addData(['GlobalPackages' => AssetManager::IncludePackages($packages)]);
 
         return $templates->render($view, $params);
     }
