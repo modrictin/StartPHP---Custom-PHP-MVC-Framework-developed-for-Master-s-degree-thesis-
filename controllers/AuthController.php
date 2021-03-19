@@ -59,13 +59,13 @@ class AuthController extends Controller
                 Application::$app->Response->redirect('/');
             }
 
-            return $this->Render("Register", "Registration Page", [
+            return $this->Render("register", "Registration Page", [
                 'model' => $user
             ]);
 
 
         }
-        return $this->Render("Register", "Registration Page", [
+        return $this->Render("register", "Registration Page", [
             'model' => $user
         ]);
     }
