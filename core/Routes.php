@@ -21,9 +21,12 @@ class Routes
     static function DefineFilters(RouteCollector $router)
     {
         $router->filter('auth', function () {
-
             Auth::checkLogin();
-
+        });
+        $router->filter('firstRedirect', function () {
+            if (Application::$app::isGuest()) {
+                Application::$app->Response->Redirect('/login');
+            }
         });
     }
 
@@ -32,12 +35,14 @@ class Routes
     {
         self::DefineFilters($router);
 
+        $router->group(['before' => 'firstRedirect'], function ($router) {
+            $router->get('/', [SiteController::class, "Home"],);
+        });
+
 
         $router->group(['before' => 'auth'], function ($router) {
-            $router->get('/', [SiteController::class, "Home"],);
             $router->get('/contact', [SiteController::class, 'Contact']);
             $router->post('/contact', [SiteController::class, 'handleContact']);
-
         });
 
         $router->post('/login', [AuthController::class, 'Login']);
