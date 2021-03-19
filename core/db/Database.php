@@ -5,7 +5,7 @@
  * Date: 3/15/2021
  */
 
-namespace app\core;
+namespace app\core\db;
 
 
 class Database

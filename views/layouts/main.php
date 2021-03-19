@@ -43,17 +43,9 @@ use app\core\AssetManager;
                     <li class="nav-item   ">
                         <a class="nav-link" href="/contact">
                             <i class="material-icons">grid_4x4</i>
-                            <p>contact</p>
+                            <p>contact us</p>
                         </a>
                     </li>
-                    <li class="nav-item   ">
-                        <a class="nav-link" href="/dashboard">
-                            <i class="material-icons">grid_4x4</i>
-                            <p>Documentation</p>
-                        </a>
-                    </li>
-
-
                 </ul>
             </div>
         </div>

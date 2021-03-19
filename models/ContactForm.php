@@ -8,6 +8,7 @@
 namespace app\models;
 
 
+use app\core\Application;
 use app\core\Model;
 
 class ContactForm extends Model
@@ -38,6 +39,7 @@ class ContactForm extends Model
 
     public function send()
     {
-        return true;
+        return Application::$app->mailer->send_mail($this->subject, $this->body, [$this->email]);
+
     }
 }

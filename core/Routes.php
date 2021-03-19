@@ -35,9 +35,9 @@ class Routes
 
         $router->group(['before' => 'auth'], function ($router) {
             $router->get('/', [SiteController::class, "Home"],);
-            $router->get('/profile', [AuthController::class, 'Profile']);
             $router->get('/contact', [SiteController::class, 'Contact']);
             $router->post('/contact', [SiteController::class, 'handleContact']);
+
         });
 
         $router->post('/login', [AuthController::class, 'Login']);

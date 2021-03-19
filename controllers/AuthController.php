@@ -76,9 +76,5 @@ class AuthController extends Controller
         Application::$app->Response->Redirect('/login');
     }
 
-    public function Profile()
-    {
-        return $this->Render("profile", "Profile Page");
-    }
 
 }

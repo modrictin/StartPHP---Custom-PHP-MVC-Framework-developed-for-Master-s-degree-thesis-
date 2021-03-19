@@ -1,11 +1,11 @@
 <?php
 /**
- * User: TheCodeholic
- * Date: 7/26/2020
- * Time: 3:49 PM
+ * Created by PhpStorm
+ * User: Tin Modrić
+ * Date: 3/9/2021
  */
 
-namespace thecodeholic\phpmvc\form;
+namespace app\core\form;
 
 
 /**
@@ -18,7 +18,7 @@ class TextareaField extends BaseField
 {
     public function renderInput()
     {
-        return sprintf('<textarea class="form-control%s" name="%s">%s</textarea>',
+        return sprintf('<textarea class="form-control %s" rows="7" name="%s">%s</textarea>',
             $this->model->hasError($this->attribute) ? ' is-invalid' : '',
             $this->attribute,
             $this->model->{$this->attribute},

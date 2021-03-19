@@ -12,6 +12,7 @@ use app\core\Application;
 use app\core\AssetManager;
 use app\core\Controller;
 use app\models\ContactForm;
+use app\models\User;
 
 
 class SiteController extends Controller
@@ -37,7 +38,7 @@ class SiteController extends Controller
             Application::$app->session->setFlash('success', 'Thanks for contacting support');
             $this->Response->Redirect('/contact');
         }
-        return $this->Render("contact", "Contact Support", ['model' => $contact]);
+        return $this->Render("contact", "Contact Us", ['model' => $contact]);
 
     }
 

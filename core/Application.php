@@ -8,6 +8,8 @@
 namespace app\core;
 
 
+use app\core\db\Database;
+use app\core\db\DbModel;
 use mysql_xdevapi\Exception;
 use Phroute\Phroute\Dispatcher;
 use Phroute\Phroute\Exception\BadRouteException;
@@ -49,7 +51,7 @@ class Application
 
         $this->db = new Database($this->config['db']);
         //Initialize RouteCollector and Dispatcher
-
+        $this->mailer = new Mailer($this->config['mail']);
         $this->session = new Session();
         $this->Response = new Response();
         $this->Request = new Request();
@@ -78,11 +80,18 @@ class Application
 
             'userClass' => \app\models\User::class,
             'db' => [
-
                 'dsn' => $_ENV['DB_DSN'],
                 'user' => $_ENV['DB_USER'],
                 'password' => $_ENV['DB_PASSWORD']
+            ],
+            'mail' => [
+                'mail_host' => $_ENV['MAIL_HOST'],
+                'smtp_port' => $_ENV['SMTP_PORT'],
+                'mail_username' => $_ENV['MAIL_USERNAME'],
+                'mail_pw' => $_ENV['SMTP_PASSWORD'],
+                'from_default' => $_ENV['MAIL_SEND_FROM_DEFAULT'],
             ]
+
         ];
     }
 

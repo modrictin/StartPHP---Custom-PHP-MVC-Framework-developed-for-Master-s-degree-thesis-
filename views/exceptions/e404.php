@@ -5,11 +5,7 @@
 use app\core\AssetManager;
 use app\core\form\Form;
 
-$this->layout('/layouts/auth', [
-    'title' => $this->e($PAGE_TITLE),
-    'VIEW_NAME' => $this->e($VIEW_NAME),
-    'PACKAGES' => $PACKAGES
-]);
+$this->layout('/layouts/auth');
 
 ?>
 

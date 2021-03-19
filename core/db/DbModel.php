@@ -5,8 +5,11 @@
  * Date: 3/17/2021
  */
 
-namespace app\core;
+namespace app\core\db;
 
+
+use app\core\Application;
+use app\core\Model;
 
 abstract class DbModel extends Model
 {
