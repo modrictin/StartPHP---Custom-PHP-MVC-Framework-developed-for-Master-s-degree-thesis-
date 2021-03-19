@@ -111,12 +111,14 @@ class AssetManager
     static function IncludePackages(array $Packages)
     {
         $ReturnArray = [];
-        foreach ($Packages as $package) {
-            if (key_exists($package, self::$TemplatePackages)) {
-                foreach (self::$TemplatePackages[$package] as $AssetType => $AssetArray) {
-                    if (!empty($AssetArray)) {
-                        foreach ($AssetArray as $asset) {
-                            $ReturnArray[$AssetType][] = $asset;
+        if (!empty($Packages)) {
+            foreach ($Packages as $package) {
+                if (key_exists($package, self::$TemplatePackages)) {
+                    foreach (self::$TemplatePackages[$package] as $AssetType => $AssetArray) {
+                        if (!empty($AssetArray)) {
+                            foreach ($AssetArray as $asset) {
+                                $ReturnArray[$AssetType][] = $asset;
+                            }
                         }
                     }
                 }
@@ -129,19 +131,24 @@ class AssetManager
     static function GetPackageStyles(array $Packages)
     {
         $StylesHtml = '';
-
-        foreach ($Packages['css'] as $path) {
-            $StylesHtml .= " <link rel=\"stylesheet\" href=\"./assets/packages/$path\"/>\n";
+        if (!empty($Packages)) {
+            foreach ($Packages['css'] as $path) {
+                $StylesHtml .= " <link rel=\"stylesheet\" href=\"./assets/packages/$path\"/>\n";
+            }
+            echo $StylesHtml;
         }
-        echo $StylesHtml;
+
+
     }
 
     public
     static function GetPackageScripts(array $Packages)
     {
-        $ScriptsHtml = '';
-        foreach ($Packages['js'] as $path) {
-            $ScriptsHtml .= '<script type="text/javascript" src="./assets/packages/' . $path . '"></script>';
+        if (!empty($Packages)) {
+            $ScriptsHtml = '';
+            foreach ($Packages['js'] as $path) {
+                $ScriptsHtml .= '<script type="text/javascript" src="./assets/packages/' . $path . '"></script>';
+            }
         }
         echo $ScriptsHtml;
     }
