@@ -8,12 +8,6 @@
 namespace app\core\form;
 
 
-/**
- * Class TextareaField
- *
- * @author  Zura Sekhniashvili <zurasekhniashvili@gmail.com>
- * @package thecodeholic\phpmvc\form
- */
 class TextareaField extends BaseField
 {
     public function renderInput()
