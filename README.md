@@ -1,4 +1,4 @@
-# StartPHP
+# StartPHP - Custom PHP Framework - Master Degree Thesis - 2020.
 
 In this study the Laravel and Symfony software frameworks were evaluated and 
 compared, and the comparative results were utilized to design the creation of a new version of 
